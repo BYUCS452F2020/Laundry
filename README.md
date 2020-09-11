@@ -3,6 +3,7 @@
 Laundry:  Backend for a Smart Laundry Service
 
 Technical:
+    
     Back End:
          Store information about laundry rooms (how many machines, what type, run times, etc)
          Store user information (prefered laundry room, geographic location, notification preferences)
