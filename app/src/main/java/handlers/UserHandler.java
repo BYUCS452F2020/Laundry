@@ -34,17 +34,18 @@ public class UserHandler implements HttpHandler {
                     UpdateUser();
                     break;
                 default:
-                    throw new Exception("No type");
+                    throw new IOException("No type");
             }
 
             // Return 200 response
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             exchange.getResponseBody().close();
-        } catch (Exception e) {
-            System.out.println(LocalTime.now() + " Exception: " + e.toString());
+
 
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             exchange.getResponseBody().close();
+        } catch (IOException e){
+            System.out.println(LocalTime.now() + " Exception: " + e.toString());
         }
     }
 
