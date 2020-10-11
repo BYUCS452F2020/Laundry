@@ -8,14 +8,16 @@ import models.RequestType;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class RoomHandler implements HttpHandler {
-
+  private Map<String, String> exchangeParameters;
   private String requestType;
 
   public RoomHandler(String requestType) {
+    exchangeParameters = new HashMap<>();
     this.requestType = requestType;
   }
 
@@ -59,10 +61,34 @@ public class RoomHandler implements HttpHandler {
   private boolean deleteRoom() {
     System.out.println(LocalTime.now() + " Deleting room");
     return true;
-}
+  }
 
-private boolean updateRoom() {
-    System.out.println(LocalTime.now() + " Update room");
-    return true;
-}
+  private boolean updateRoom() {
+      System.out.println(LocalTime.now() + " Update room");
+      return true;
+  }
+
+  private void getExchangeParameters(HttpExchange exchange) {
+    // Get parameters from query
+    String query = exchange.getRequestURI().getQuery();
+
+    for (String param : query.split("&")) {
+      String[] entry = param.split("=");
+      if (entry.length > 1) {
+          exchangeParameters.put(entry[0], entry[1]);
+      }else{
+          exchangeParameters.put(entry[0], "");
+      }
+    }
+
+    // Get headers
+    Headers headers = exchange.getRequestHeaders();
+    for (Map.Entry<String, List<String>> entry : headers.entrySet())  {
+        StringBuilder sb = new StringBuilder();
+        for(String str : entry.getValue()) {
+            sb.append(str);
+        }
+        exchangeParameters.put(entry.getKey(), sb.toString());
+    }
+  }
 }
