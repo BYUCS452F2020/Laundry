@@ -1,6 +1,6 @@
 package models.request.admin;
 
-import models.object.Machine;
+import models.Machine;
 
 public class EditMachineRequest {
 

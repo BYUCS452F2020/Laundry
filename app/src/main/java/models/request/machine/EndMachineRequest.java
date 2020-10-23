@@ -1,17 +1,19 @@
 package models.request.machine;
 
+import models.Machine;
+
 /**
  * Machine Notifying the Server that a job has finished
  */
 public class EndMachineRequest {
 
-    private String machineId;
+    private Machine machine;
 
-    public EndMachineRequest(String machineId) {
-        this.machineId = machineId;
+    public EndMachineRequest(Machine machine) {
+        this.machine = machine;
     }
 
-    public String getMachineId() {
-        return machineId;
+    public Machine getMachine() {
+        return machine;
     }
 }

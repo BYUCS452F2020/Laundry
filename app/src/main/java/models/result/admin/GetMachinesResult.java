@@ -1,6 +1,6 @@
 package models.result.admin;
 
-import models.object.Machine;
+import models.Machine;
 import models.result.Result;
 
 import java.util.List;

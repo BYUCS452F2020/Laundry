@@ -1,4 +1,7 @@
 import com.sun.net.httpserver.HttpServer;
+
+import handlers.MachineHandler;
+import handlers.RoomHandler;
 import handlers.TestHandler;
 import handlers.UserHandler;
 import models.RequestType;
@@ -39,6 +42,18 @@ public class Server {
         server.createContext("/user/delete", new UserHandler(RequestType.DELETE));
         server.createContext("/user/update", new UserHandler(RequestType.UPDATE));
 
+        // Room
+        server.createContext("/room/delete", new RoomHandler(RequestType.DELETE));
+        server.createContext("/room/create", new RoomHandler(RequestType.CREATE));
+        server.createContext("/room/update", new RoomHandler(RequestType.UPDATE));
+
+        // Machine
+        server.createContext("/machine/delete", new MachineHandler(RequestType.DELETE));
+        server.createContext("/machine/create", new MachineHandler(RequestType.CREATE));
+        server.createContext("/machine/update", new MachineHandler(RequestType.UPDATE));
+        server.createContext("/machine/status", new MachineHandler(RequestType.STATUS));
+
+        //
         server.start();
         System.out.println(LocalTime.now() + " Server started.");
     }

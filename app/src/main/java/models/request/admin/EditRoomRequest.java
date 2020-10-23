@@ -1,6 +1,6 @@
 package models.request.admin;
 
-import models.object.Room;
+import models.Room;
 
 public class EditRoomRequest {
 

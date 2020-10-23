@@ -1,8 +1,8 @@
 package models.request.admin;
 
-import models.object.Machine;
-import models.object.Room;
-import models.object.User;
+import models.Machine;
+import models.Room;
+import models.User;
 
 import java.util.List;
 

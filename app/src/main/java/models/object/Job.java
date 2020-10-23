@@ -3,10 +3,10 @@ package models.object;
 public class Job {
 
     private String username;
-    private int startTime;
-    private int endTime;
+    private String startTime;
+    private String endTime;
 
-    public Job(String username, int startTime, int endTime) {
+    public Job(String username, String startTime, String endTime) {
         this.username = username;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -20,19 +20,19 @@ public class Job {
         this.username = username;
     }
 
-    public int getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(int startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public int getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(int endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 }
