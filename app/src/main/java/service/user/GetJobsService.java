@@ -17,31 +17,31 @@ import java.util.List;
 
 public class GetJobsService {
 
-    public GetJobsService() {
-    }
+  public GetJobsService() {
+  }
 
-    public GetJobsResult getJobs(GetJobsRequest request) {
+  public GetJobsResult getJobs(GetJobsRequest request) {
 
-        List<Machine> machineList = null;
-        List<Job> jobList = new ArrayList<>();
-        String username = request.getUsername();
-        Database database = new Database();
-        try {
-            Connection connection = database.getConnection();
-            MachineDAO machineDao = new MachineDAO(connection);
-            machineList = machineDao.findMachinesByUserID(username);
+    List<Machine> machineList = null;
+    List<Job> jobList = new ArrayList<>();
+    String username = request.getUsername();
+    Database database = new Database();
+    try {
+      Connection connection = database.getConnection();
+      MachineDAO machineDao = new MachineDAO(connection);
+      machineList = machineDao.findMachinesByUserID(username);
 
-            if (machineList.size() != 0) {
-                for (Machine m: machineList) {
-                    jobList.add(new Job(m.getJobUserID(), m.getJobStartTime(), m.getJobFinishTime()));
-                }
-                return new GetJobsResult("Successfully retrieved jobs", true, jobList);
-            } else {
-                return new GetJobsResult("No Jobs found for this user!", false, null);
-            }
-        } catch (DataAccessException e){
-            return new GetJobsResult("Failed to retrieve jobs", false, null);
+      if (machineList.size() != 0) {
+        for (Machine m : machineList) {
+          jobList.add(new Job(m.getJobUserID(), m.getJobStartTime(), m.getJobFinishTime()));
         }
-
+        return new GetJobsResult("Successfully retrieved jobs", true, jobList);
+      } else {
+        return new GetJobsResult("No Jobs found for this user!", false, null);
+      }
+    } catch (DataAccessException e) {
+      return new GetJobsResult("Failed to retrieve jobs", false, null);
     }
+
+  }
 }

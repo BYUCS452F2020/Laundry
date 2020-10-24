@@ -12,81 +12,80 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MachineDAOTest {
 
-    private Database db;
+  private Database db;
 
-    @BeforeEach
-    public void setUp() throws Exception {
-        db = new Database();
-        db.openConnection();
-        db.createTables();
-        db.closeConnection(true);
+  @BeforeEach
+  public void setUp() throws Exception {
+    db = new Database();
+    db.openConnection();
+    db.createTables();
+    db.closeConnection(true);
+  }
+
+  @AfterEach
+  public void tearDown() throws Exception {
+    db.openConnection();
+    db.clearTables();
+    db.closeConnection(true);
+  }
+
+  @Test
+  void insertMachine() throws Exception {
+
+    Machine machine = new Machine("machine101", "S11", "LG", "Room101", "12:45", "13:30", "Inoh123");
+    Machine compare = null;
+
+    try {
+      Connection connection = db.openConnection();
+      MachineDAO mDao = new MachineDAO(connection);
+      mDao.insertMachine(machine);
+      compare = mDao.findMachineByUserID("Inoh123");
+      db.closeConnection(true);
+    } catch (DataAccessException e) {
+      db.closeConnection(false);
+      throw new Exception("error inserting machine test");
     }
+    assertEquals(compare, machine);
+  }
 
-    @AfterEach
-    public void tearDown() throws Exception {
-        db.openConnection();
-        db.clearTables();
-        db.closeConnection(true);
+  @Test
+  void deleteMachineByUserJobID() throws Exception {
+
+    Machine machine = new Machine("machine101", "S11", "LG", "Room101", "12:45", "13:30", "Inoh123");
+    Machine compare = null;
+
+    try {
+      Connection connection = db.openConnection();
+      MachineDAO mDao = new MachineDAO(connection);
+      mDao.insertMachine(machine);
+      mDao.deleteMachineByUserJobID(machine);
+      compare = mDao.findMachineByUserID("Inoh123");
+      db.closeConnection(true);
+    } catch (DataAccessException e) {
+      db.closeConnection(false);
+      throw new Exception("error deleting machine test");
     }
+    assertNull(compare);
+  }
 
-    @Test
-    void insertMachine() throws Exception {
+  @Test
+  void updateMachine() throws Exception {
 
-        Machine machine = new Machine("machine101", "S11", "LG", "Room101", "12:45", "13:30","Inoh123");
-        Machine compare = null;
+    Machine machine = new Machine("machine101", "S11", "LG", "Room101", "12:45", "13:30", "Inoh123");
+    Machine compare = null;
 
-        try {
-            Connection connection = db.openConnection();
-            MachineDAO mDao = new MachineDAO(connection);
-            mDao.insertMachine(machine);
-            compare = mDao.findMachineByUserID("Inoh123");
-            db.closeConnection(true);
-        } catch (DataAccessException e) {
-            db.closeConnection(false);
-            throw new Exception("error inserting machine test");
-        }
-        assertEquals(compare, machine);
+    try {
+      Connection connection = db.openConnection();
+      MachineDAO mDao = new MachineDAO(connection);
+      mDao.insertMachine(machine);
+      mDao.updateMachine(new Machine("machine101", "s11", "LG", "Room111", "15:00", "17:00", "Inoh123"));
+      compare = mDao.findMachineByUserID("Inoh123");
+      db.closeConnection(true);
+    } catch (DataAccessException e) {
+      db.closeConnection(false);
+      throw new Exception("error deleting machine test");
     }
+    assertEquals(compare.getRoomID(), "Room111");
 
-    @Test
-    void deleteMachineByUserJobID() throws Exception {
-
-        Machine machine = new Machine("machine101", "S11", "LG", "Room101", "12:45", "13:30","Inoh123");
-        Machine compare = null;
-
-        try {
-            Connection connection = db.openConnection();
-            MachineDAO mDao = new MachineDAO(connection);
-            mDao.insertMachine(machine);
-            mDao.deleteMachineByUserJobID(machine);
-            compare = mDao.findMachineByUserID("Inoh123");
-            db.closeConnection(true);
-        } catch (DataAccessException e) {
-            db.closeConnection(false);
-            throw new Exception("error deleting machine test");
-        }
-        assertNull(compare);
-    }
-
-    @Test
-    void updateMachine() throws Exception {
-
-        Machine machine = new Machine("machine101", "S11", "LG", "Room101", "12:45", "13:30","Inoh123");
-        Machine compare = null;
-
-        try {
-            Connection connection = db.openConnection();
-            MachineDAO mDao = new MachineDAO(connection);
-            mDao.insertMachine(machine);
-            mDao.updateMachine(new Machine("machine101", "s11", "LG", "Room111", "15:00","17:00","Inoh123"));
-            compare = mDao.findMachineByUserID("Inoh123");
-            db.closeConnection(true);
-        } catch (DataAccessException e) {
-            db.closeConnection(false);
-            throw new Exception("error deleting machine test");
-        }
-        assertEquals(compare.getRoomID(), "Room111");
-
-
-    }
+  }
 }

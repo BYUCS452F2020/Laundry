@@ -1,0 +1,6 @@
+app/bin/
+app/build
+app/.settings
+app/.idea
+.idea/
+app/src/main/java/DAO/MachineDAOTest.java
